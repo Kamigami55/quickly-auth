@@ -48,7 +48,7 @@ pnpm format:fix
 - [Next.js 14](https://nextjs.org/) with app router
 - [Tailwind CSS](https://tailwindcss.com/) for styling
 - [Shadow/UI](https://ui.shadcn.com/) for ready-to-use UI components
-- [Axios](https://axios-http.com/) for API requests
+- [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) for API requests
 - [Jotai](https://jotai.org/) for state management
 - [React Hook Form](https://react-hook-form.com/) for form handling
 - [Jest](https://jestjs.io/), [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for unit & snapshot tests
