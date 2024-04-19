@@ -39,6 +39,8 @@ pnpm test:watch
 
 It will run unit & snapshot tests on all components.
 
+![Test results](./docs/test.jpg)
+
 ### Lint
 
 ```bash
