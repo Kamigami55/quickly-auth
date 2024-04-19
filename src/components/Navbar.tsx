@@ -16,6 +16,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { PAGE_URL } from '@/constants/pageUrl';
 import { useAuth } from '@/hooks/useAuth';
+import { AuthState } from '@/types/auth';
 
 const NavbarItems = [
   {
@@ -33,7 +34,7 @@ const NavbarItems = [
 ];
 
 export function Navbar() {
-  const { isLoggedIn, logout } = useAuth();
+  const { authState, logout } = useAuth();
   const router = useRouter();
 
   const handleLogout = () => {
@@ -99,7 +100,7 @@ export function Navbar() {
       <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <div className="ml-auto flex-1 sm:flex-initial" />
 
-        {isLoggedIn ? (
+        {authState === AuthState.LOGGED_IN ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">

@@ -8,18 +8,19 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PAGE_URL } from '@/constants/pageUrl';
 import { useAuth } from '@/hooks/useAuth';
+import { AuthState } from '@/types/auth';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { isLoggedIn, getProfile, profile } = useAuth();
+  const { authState, getProfile, profile } = useAuth();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (authState === AuthState.LOGGED_IN) {
       getProfile();
-    } else {
+    } else if (authState === AuthState.LOGGED_OUT) {
       router.push(PAGE_URL.LOGIN);
     }
-  }, [isLoggedIn, getProfile, router]);
+  }, [authState, getProfile, router]);
 
   return (
     <div className="my-8 mx-10">

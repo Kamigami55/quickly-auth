@@ -1,13 +1,10 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { useCallback, useEffect } from 'react';
 
-import {
-  accessTokenAtom,
-  isLoggedInAtom,
-  profileAtom,
-} from '@/atoms/authAtoms';
+import { accessTokenAtom, authStateAtom, profileAtom } from '@/atoms/authAtoms';
 import { QUICKLY_API_URL } from '@/constants/apiUrl';
 import { LOCAL_STORAGE_KEYS } from '@/constants/localStorage';
+import { AuthState } from '@/types/auth';
 import { Company, Profile, User } from '@/types/profile';
 
 interface LoginResponse {
@@ -108,7 +105,7 @@ function signupDataToPayload(data: SignupData): SignupPayload {
 }
 
 export const useAuth: () => {
-  isLoggedIn: boolean;
+  authState: AuthState;
   accessToken?: string;
   signup: (data: SignupData) => Promise<boolean>;
   login: (email: string, password: string) => Promise<boolean>;
@@ -118,14 +115,17 @@ export const useAuth: () => {
 } = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [profile, setProfile] = useAtom(profileAtom);
-  const isLoggedIn = useAtomValue(isLoggedInAtom);
+  const [authState, setAuthState] = useAtom(authStateAtom);
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
     if (accessToken) {
       setAccessToken(accessToken);
+      setAuthState(AuthState.LOGGED_IN);
+    } else {
+      setAuthState(AuthState.LOGGED_OUT);
     }
-  }, [setAccessToken]);
+  }, [setAccessToken, setAuthState]);
 
   const signup = async (signupData: SignupData) => {
     try {
@@ -139,8 +139,9 @@ export const useAuth: () => {
       });
       const data = (await response.json()) as SignupResponse;
       if (data.success) {
-        setAccessToken(data.token);
         localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, data.token);
+        setAccessToken(data.token);
+        setAuthState(AuthState.LOGGED_IN);
         return true; // success
       }
       console.error(data.message);
@@ -165,8 +166,9 @@ export const useAuth: () => {
       });
       const data = (await response.json()) as LoginResponse;
       if (data.success) {
-        setAccessToken(data.token);
         localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, data.token);
+        setAccessToken(data.token);
+        setAuthState(AuthState.LOGGED_IN);
         return true; // success
       }
       console.error(data.message);
@@ -178,9 +180,10 @@ export const useAuth: () => {
   }
 
   const logout = () => {
-    setAccessToken('');
-    setProfile(null);
     localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
+    setAccessToken('');
+    setAuthState(AuthState.LOGGED_OUT);
+    setProfile(null);
   };
 
   const getProfile = useCallback(async () => {
@@ -201,7 +204,7 @@ export const useAuth: () => {
 
   return {
     accessToken,
-    isLoggedIn,
+    authState,
     signup,
     login,
     logout,
