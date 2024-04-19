@@ -54,40 +54,46 @@ export default function ProfilePage() {
           <CardContent className="grid gap-4">
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">Legal Name:</div>
-              <div className="text-sm">{profile?.company?.legal_name}</div>
+              <div className="text-sm">
+                {profile?.company?.legal_name || '-'}
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">Business Type:</div>
-              <div className="text-sm">{profile?.company?.business_type}</div>
+              <div className="text-sm">
+                {profile?.company?.business_type || '-'}
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">Industry:</div>
-              <div className="text-sm">{profile?.company?.industry}</div>
+              <div className="text-sm">{profile?.company?.industry || '-'}</div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">Website:</div>
-              <div className="text-sm">{profile?.company?.website}</div>
+              <div className="text-sm">{profile?.company?.website || '-'}</div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">
                 Business Registration:
               </div>
               <div className="text-sm">
-                {profile?.company?.business_registration}
+                {profile?.company?.business_registration || '-'}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">Phone:</div>
-              <div className="text-sm">{profile?.company?.phone}</div>
+              <div className="text-sm">{profile?.company?.phone || '-'}</div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500">Business Number:</div>
-              <div className="text-sm">{profile?.company?.business_number}</div>
+              <div className="text-sm">
+                {profile?.company?.business_number || '-'}
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div className="text-sm text-gray-500 ">Expected Activity:</div>
               <div className="text-sm">
-                {profile?.company?.expected_activity}
+                {profile?.company?.expected_activity || '-'}
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
