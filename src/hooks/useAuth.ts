@@ -4,14 +4,9 @@ import { useCallback, useEffect } from 'react';
 import { accessTokenAtom, authStateAtom, profileAtom } from '@/atoms/authAtoms';
 import { QUICKLY_API_URL } from '@/constants/apiUrl';
 import { LOCAL_STORAGE_KEYS } from '@/constants/localStorage';
+import { quicklyApi } from '@/services/quicklyApi';
 import { AuthState } from '@/types/auth';
 import { Company, Profile, User } from '@/types/profile';
-
-interface LoginResponse {
-  success: boolean;
-  message: string;
-  token?: string;
-}
 
 interface ProfileResponse {
   success: boolean;
@@ -152,30 +147,20 @@ export const useAuth: () => {
     }
   };
 
-  async function login(email: string, password: string) {
+  async function login(email: string, password: string): Promise<boolean> {
     try {
-      const response = await fetch(QUICKLY_API_URL.LOGIN, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
-      const data = (await response.json()) as LoginResponse;
-      if (data.success) {
-        localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, data.token);
-        setAccessToken(data.token);
+      const response = await quicklyApi.login({ email, password });
+      if (response.success) {
+        localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, response.token);
+        setAccessToken(response.token);
         setAuthState(AuthState.LOGGED_IN);
-        return true; // success
+        return true; // success, return true
       }
-      console.error(data.message);
-      return false; // error
+      console.error(response.message);
+      return false; // error, return false
     } catch (error) {
       console.error(error);
-      return false; // error
+      return false; // error, return false
     }
   }
 

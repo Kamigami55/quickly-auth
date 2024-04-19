@@ -45,12 +45,12 @@ export default function LoginPage() {
     setIsSubmitting(true);
     try {
       const success = await login(values.email, values.password);
-      if (!success) {
-        throw new Error('Login failed');
+      if (success) {
+        router.push(PAGE_URL.PROFILE);
+      } else {
+        window.alert('Login failed, please try again later');
       }
-      router.push(PAGE_URL.PROFILE);
     } catch (error) {
-      console.log(error);
       form.setError('email', {
         type: 'manual',
         message: 'Invalid email or password',
