@@ -43,14 +43,10 @@ export default function LoginPage() {
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
     setIsSubmitting(true);
-    try {
-      const success = await login(values.email, values.password);
-      if (success) {
-        router.push(PAGE_URL.PROFILE);
-      } else {
-        window.alert('Login failed, please try again later');
-      }
-    } catch (error) {
+    const apiResponse = await login(values.email, values.password);
+    if (apiResponse.success) {
+      router.push(PAGE_URL.PROFILE);
+    } else {
       form.setError('email', {
         type: 'manual',
         message: 'Invalid email or password',
@@ -59,9 +55,8 @@ export default function LoginPage() {
         type: 'manual',
         message: 'Invalid email or password',
       });
-    } finally {
-      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
 
   return (

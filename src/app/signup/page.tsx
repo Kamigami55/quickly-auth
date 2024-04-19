@@ -96,32 +96,28 @@ export default function SignUpPage() {
 
   const onSubmit = async (values: z.infer<typeof signupFormSchema>) => {
     setIsSubmitting(true);
-    try {
-      const success = await signup({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        password: values.password,
-        earlyPayIntent: values.earlyPayIntent,
-        expectedActivity: values.expectedActivity,
-        industry: values.industry,
-        businessType: values.businessType,
-        website: values.website,
-        businessRegistration: values.businessRegistration,
-        phone: values.phone,
-        businessNumber: values.businessNumber,
-        hasTradeName: values.hasTradeName,
-        legalName: values.legalName,
-      });
-      if (!success) {
-        throw new Error('Signup failed');
-      }
+    const apiResponse = await signup({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      password: values.password,
+      earlyPayIntent: values.earlyPayIntent,
+      expectedActivity: values.expectedActivity,
+      industry: values.industry,
+      businessType: values.businessType,
+      website: values.website,
+      businessRegistration: values.businessRegistration,
+      phone: values.phone,
+      businessNumber: values.businessNumber,
+      hasTradeName: values.hasTradeName,
+      legalName: values.legalName,
+    });
+    if (apiResponse.success) {
       router.push(PAGE_URL.PROFILE);
-    } catch (error) {
-      window.alert(error);
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      window.alert(apiResponse.message);
     }
+    setIsSubmitting(false);
   };
 
   return (

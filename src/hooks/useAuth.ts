@@ -6,11 +6,16 @@ import { LOCAL_STORAGE_KEYS } from '@/constants/localStorage';
 import { ProfileData, quicklyApi, SignupData } from '@/services/quicklyApi';
 import { AuthState } from '@/types/auth';
 
+type ApiResponse = {
+  success: boolean;
+  message: string;
+};
+
 export const useAuth: () => {
   authState: AuthState;
   accessToken?: string;
-  signup: (data: SignupData) => Promise<boolean>;
-  login: (email: string, password: string) => Promise<boolean>;
+  signup: (data: SignupData) => Promise<ApiResponse>;
+  login: (email: string, password: string) => Promise<ApiResponse>;
   logout: () => void;
   fetchProfile: () => Promise<void>;
   profile: ProfileData | null;
@@ -29,37 +34,49 @@ export const useAuth: () => {
     }
   }, [setAccessToken, setAuthState]);
 
-  const signup = async (signupData: SignupData): Promise<boolean> => {
+  const signup = async (signupData: SignupData): Promise<ApiResponse> => {
     try {
       const response = await quicklyApi.postSignup(signupData);
       if (response.success) {
         localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, response.token);
         setAccessToken(response.token);
         setAuthState(AuthState.LOGGED_IN);
-        return true; // success
+      } else {
+        console.error(response.message);
       }
-      console.error(response.message);
-      return false; // error
+      return {
+        success: response.success,
+        message: response.message,
+      };
     } catch (error) {
       console.error(error);
-      return false; // error
+      return {
+        success: false,
+        message: 'Something went wrong',
+      };
     }
   };
 
-  async function login(email: string, password: string): Promise<boolean> {
+  async function login(email: string, password: string): Promise<ApiResponse> {
     try {
       const response = await quicklyApi.postLogin({ email, password });
       if (response.success) {
         localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, response.token);
         setAccessToken(response.token);
         setAuthState(AuthState.LOGGED_IN);
-        return true; // success
+      } else {
+        console.error(response.message);
       }
-      console.error(response.message);
-      return false; // error
+      return {
+        success: response.success,
+        message: response.message,
+      };
     } catch (error) {
       console.error(error);
-      return false; // error
+      return {
+        success: false,
+        message: 'Something went wrong',
+      };
     }
   }
 
