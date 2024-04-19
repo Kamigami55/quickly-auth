@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { PAGE_URL } from '@/constants/pageUrl';
 import { useAuth } from '@/hooks/useAuth';
 
 const loginFormSchema = z.object({
@@ -47,7 +48,7 @@ export default function LoginPage() {
       if (!success) {
         throw new Error('Login failed');
       }
-      router.push('/profile');
+      router.push(PAGE_URL.PROFILE);
     } catch (error) {
       console.log(error);
       form.setError('email', {
@@ -125,7 +126,7 @@ export default function LoginPage() {
 
           <div className="mt-4 text-center text-sm">
             Don&apos;t have an account?{' '}
-            <Link href="/signup" className="underline">
+            <Link href={PAGE_URL.SIGNUP} className="underline">
               Sign up
             </Link>
           </div>

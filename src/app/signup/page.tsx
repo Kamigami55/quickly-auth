@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { PAGE_URL } from '@/constants/pageUrl';
 import { useAuth } from '@/hooks/useAuth';
 
 const signupFormSchema = z
@@ -115,7 +116,7 @@ export default function SignUpPage() {
       if (!success) {
         throw new Error('Signup failed');
       }
-      router.push('/profile');
+      router.push(PAGE_URL.PROFILE);
     } catch (error) {
       window.alert(error);
     } finally {
@@ -544,7 +545,7 @@ export default function SignUpPage() {
 
           <div className="mt-4 text-center text-sm">
             Already have an account?{' '}
-            <Link href="/login" className="underline">
+            <Link href={PAGE_URL.LOGIN} className="underline">
               Sign in
             </Link>
           </div>

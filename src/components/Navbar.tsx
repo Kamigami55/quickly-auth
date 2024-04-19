@@ -14,20 +14,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { PAGE_URL } from '@/constants/pageUrl';
 import { useAuth } from '@/hooks/useAuth';
 
 const NavbarItems = [
   {
     name: 'Login',
-    href: '/login',
+    href: PAGE_URL.LOGIN,
   },
   {
     name: 'Signup',
-    href: '/signup',
+    href: PAGE_URL.SIGNUP,
   },
   {
     name: 'Profile',
-    href: '/profile',
+    href: PAGE_URL.PROFILE,
   },
 ];
 
@@ -37,7 +38,7 @@ export function Navbar() {
 
   const handleLogout = () => {
     logout();
-    router.push('/login');
+    router.push(PAGE_URL.LOGIN);
   };
 
   return (
@@ -107,7 +108,7 @@ export function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <Link href="/profile">
+              <Link href={PAGE_URL.PROFILE}>
                 <DropdownMenuItem className="cursor-pointer">
                   Profile
                 </DropdownMenuItem>
@@ -122,7 +123,7 @@ export function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <Link href="/login">
+          <Link href={PAGE_URL.LOGIN}>
             <Button>Login</Button>
           </Link>
         )}

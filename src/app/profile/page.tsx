@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { PAGE_URL } from '@/constants/pageUrl';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function ProfilePage() {
@@ -16,7 +17,7 @@ export default function ProfilePage() {
     if (isLoggedIn) {
       getProfile();
     } else {
-      router.push('/login');
+      router.push(PAGE_URL.LOGIN);
     }
   }, [isLoggedIn, getProfile, router]);
 
