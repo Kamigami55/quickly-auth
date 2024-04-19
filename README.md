@@ -78,6 +78,8 @@ The form validates whether the email format is correct.
 
 Users can logout by clicking the logout button on the top right corner.
 
+The user auth token is stored in **Local Storage**.
+
 ![Logout button](./docs/logout.jpg)
 
 ### Sign Up page (`/signup`)
