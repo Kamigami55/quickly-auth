@@ -10,6 +10,11 @@ https://quickly-auth.vercel.app/
 
 ## Scripts
 
+### Pre-requisites
+
+- [Node.js](https://nodejs.org/en/) (v21 or higher)
+- [pnpm](https://pnpm.io/) (v9 or higher)
+
 ### Installation
 
 ```bash
