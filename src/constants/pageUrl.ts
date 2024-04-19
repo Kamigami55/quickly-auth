@@ -1,5 +1,5 @@
 export const PAGE_URL = {
-  PROFILE: '/profile',
+  PROFILE: '/',
   LOGIN: '/login',
   SIGNUP: '/signup',
 };
