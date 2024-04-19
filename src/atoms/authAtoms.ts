@@ -9,4 +9,4 @@ export const isLoggedInAtom = atom((get) => {
   return !!accessToken;
 });
 
-export const profileAtom = atom<Profile | null>(null);
+export const profileAtom = atom<Profile | null>(null as Profile);
