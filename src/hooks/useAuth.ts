@@ -4,12 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { accessTokenAtom, authStateAtom, profileAtom } from '@/atoms/authAtoms';
 import { LOCAL_STORAGE_KEYS } from '@/constants/localStorage';
 import { ProfileData, quicklyApi, SignupData } from '@/services/quicklyApi';
-import { AuthState } from '@/types/auth';
-
-type ApiResponse = {
-  success: boolean;
-  message: string;
-};
+import { ApiResponse, AuthState } from '@/types/auth';
 
 export const useAuth: () => {
   authState: AuthState;
