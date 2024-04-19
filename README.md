@@ -89,3 +89,14 @@ Users can sign up:
 ![Sign Up page](./docs/signup.png)
 
 The form validates whether the email format is correct, the password is at least 6 characters long, and the confirmed email and password are the same.
+
+## Folder structure in `/src` folder
+
+- `/app`: Next.js app router for pages
+- `/atoms`: Jotai atoms for global states
+- `/components`: React components with unit tests
+- `/components/ui`: Shadcn/UI components installed via npm
+- `/hooks`: Custom hooks
+- `/lib`: Utility functions for Shadcn/UI components
+- `/services`: API services, actual API calls
+- `/types`: TypeScript types
