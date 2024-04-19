@@ -11,7 +11,7 @@ import { AuthState } from '@/types/auth';
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { authState, getProfile, profile } = useAuth();
+  const { authState, fetchProfile: getProfile, profile } = useAuth();
 
   useEffect(() => {
     if (authState === AuthState.LOGGED_IN) {

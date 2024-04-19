@@ -17,7 +17,7 @@ export interface SignupData {
   legalName: string;
 }
 
-interface SignupPayload {
+interface SignupRequestPayload {
   user: {
     first_name: string;
     last_name: string;
@@ -51,7 +51,7 @@ interface SignupResponse {
   token?: string;
 }
 
-function signupDataToPayload(data: SignupData): SignupPayload {
+function signupDataToRequestPayload(data: SignupData): SignupRequestPayload {
   return {
     user: {
       first_name: data.firstName,
@@ -83,15 +83,15 @@ function signupDataToPayload(data: SignupData): SignupPayload {
     },
   };
 }
-export async function signup(data: SignupData): Promise<SignupResponse> {
-  const payload = signupDataToPayload(data);
+export async function postSignup(data: SignupData): Promise<SignupResponse> {
+  const requestPayload = signupDataToRequestPayload(data);
 
   const response = await fetch(QUICKLY_API_URL.SIGNUP, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(requestPayload),
   });
   const responseJson = (await response.json()) as SignupResponse;
 

@@ -1,10 +1,13 @@
-import { login } from './login';
-import { signup } from './signup';
+import { getProfile } from './getProfile';
+import { postLogin } from './postLogin';
+import { postSignup } from './postSignup';
 
-export * from './login';
-export * from './signup';
+export * from './getProfile';
+export * from './postLogin';
+export * from './postSignup';
 
 export const quicklyApi = {
-  login,
-  signup,
+  postLogin,
+  postSignup,
+  getProfile,
 };

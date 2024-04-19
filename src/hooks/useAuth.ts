@@ -2,18 +2,9 @@ import { useAtom } from 'jotai';
 import { useCallback, useEffect } from 'react';
 
 import { accessTokenAtom, authStateAtom, profileAtom } from '@/atoms/authAtoms';
-import { QUICKLY_API_URL } from '@/constants/apiUrl';
 import { LOCAL_STORAGE_KEYS } from '@/constants/localStorage';
-import { quicklyApi, SignupData } from '@/services/quicklyApi';
+import { ProfileData, quicklyApi, SignupData } from '@/services/quicklyApi';
 import { AuthState } from '@/types/auth';
-import { Company, Profile, User } from '@/types/profile';
-
-interface ProfileResponse {
-  success: boolean;
-  message: string;
-  user?: User;
-  company?: Company;
-}
 
 export const useAuth: () => {
   authState: AuthState;
@@ -21,8 +12,8 @@ export const useAuth: () => {
   signup: (data: SignupData) => Promise<boolean>;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
-  getProfile: () => Promise<ProfileResponse>;
-  profile: Profile | null;
+  fetchProfile: () => Promise<void>;
+  profile: ProfileData | null;
 } = () => {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [profile, setProfile] = useAtom(profileAtom);
@@ -40,7 +31,7 @@ export const useAuth: () => {
 
   const signup = async (signupData: SignupData): Promise<boolean> => {
     try {
-      const response = await quicklyApi.signup(signupData);
+      const response = await quicklyApi.postSignup(signupData);
       if (response.success) {
         localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, response.token);
         setAccessToken(response.token);
@@ -57,7 +48,7 @@ export const useAuth: () => {
 
   async function login(email: string, password: string): Promise<boolean> {
     try {
-      const response = await quicklyApi.login({ email, password });
+      const response = await quicklyApi.postLogin({ email, password });
       if (response.success) {
         localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, response.token);
         setAccessToken(response.token);
@@ -79,20 +70,9 @@ export const useAuth: () => {
     setProfile(null);
   };
 
-  const getProfile = useCallback(async () => {
-    const response = await fetch(QUICKLY_API_URL.USER, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    const data = (await response.json()) as ProfileResponse;
-    setProfile({
-      user: data.user,
-      company: data.user.Company,
-    });
-    return data;
+  const fetchProfile = useCallback(async () => {
+    const profileData = await quicklyApi.getProfile({ accessToken });
+    setProfile(profileData);
   }, [accessToken, setProfile]);
 
   return {
@@ -101,7 +81,7 @@ export const useAuth: () => {
     signup,
     login,
     logout,
-    getProfile,
+    fetchProfile,
     profile,
   };
 };

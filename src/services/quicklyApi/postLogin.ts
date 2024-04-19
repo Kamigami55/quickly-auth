@@ -11,7 +11,7 @@ interface LoginResponse {
   token?: string;
 }
 
-export async function login({
+export async function postLogin({
   email,
   password,
 }: LoginPayload): Promise<LoginResponse> {

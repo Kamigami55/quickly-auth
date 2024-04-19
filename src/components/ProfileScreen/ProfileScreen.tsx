@@ -2,9 +2,9 @@ import { CircleUser } from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Profile } from '@/types/profile';
+import { ProfileData } from '@/services/quicklyApi';
 
-export function ProfileScreen({ profile }: { profile: Profile }) {
+export function ProfileScreen({ profile }: { profile: ProfileData }) {
   return (
     <div className="flex flex-col gap-4">
       <Card>
