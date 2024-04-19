@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Providers renders providers unchanged 1`] = `
+<div>
+  test
+</div>
+`;
