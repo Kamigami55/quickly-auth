@@ -6,7 +6,7 @@ import {
   isLoggedInAtom,
   profileAtom,
 } from '@/atoms/authAtoms';
-import { PROXY_API_URL, QUICKLY_API_URL } from '@/constants/apiUrl';
+import { QUICKLY_API_URL } from '@/constants/apiUrl';
 import { LOCAL_STORAGE_KEYS } from '@/constants/localStorage';
 import { Company, Profile, User } from '@/types/profile';
 
@@ -75,7 +75,7 @@ export const useAuth: () => {
   };
 
   const getProfile = useCallback(async () => {
-    const response = await fetch(PROXY_API_URL.USER, {
+    const response = await fetch(QUICKLY_API_URL.USER, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
